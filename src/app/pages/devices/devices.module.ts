@@ -6,7 +6,7 @@ import { routing } from './devices.routing';
 import { RestDataService } from './restdata.service';
 import { Configuration } from './devices.constants';
 import { DevicesTableComponent } from './devicesTable/devicesTable.component';
-import { Shutter4xConfigComponent } from './shutter4xConfig/shutter4xConfig.component'
+import { ShutterConfigComponent } from './shutterConfig/shutterConfig.component'
 import { NgaModule } from '../../theme/nga.module';
 
 
@@ -20,7 +20,7 @@ import { NgaModule } from '../../theme/nga.module';
   declarations: [
     DevicesComponent,
     DevicesTableComponent,
-    Shutter4xConfigComponent,
+    ShutterConfigComponent,
   ],
   providers: [
     RestDataService,

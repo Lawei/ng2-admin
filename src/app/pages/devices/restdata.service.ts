@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Device } from './Device';
-import { Shutter4xDevice } from './Shutter4xDevice';
+import { ShutterDevice } from './ShutterDevice';
 import { Configuration } from './devices.constants';
  
 @Injectable()
@@ -26,9 +26,9 @@ export class RestDataService {
             .catch(this.handleError);
     }
 
-    public GetShutterDeviceConfig = (id: number): Observable<Shutter4xDevice> => {
-        return this._http.get(this.actionUrl+'config/shutter4x?device='+id)
-            .map((response: Response) => <Shutter4xDevice>response.json())
+    public GetShutterDeviceConfig = (id: number): Observable<ShutterDevice> => {
+        return this._http.get(this.actionUrl+'config/shutter?device='+id)
+            .map((response: Response) => <ShutterDevice>response.json())
             .catch(this.handleError);
     }
  /*

@@ -16,7 +16,7 @@ export class ShutterDeviceChannel {
     }
 }
 
-export class Shutter4xDevice extends Device{
+export class ShutterDevice extends Device{
     public overdrive: number;
     public channels:Array<ShutterDeviceChannel>;
     

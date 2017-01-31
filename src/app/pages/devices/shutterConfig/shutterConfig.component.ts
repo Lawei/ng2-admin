@@ -1,15 +1,15 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RestDataService } from '../restdata.service';
-import { Shutter4xDevice, ShutterDeviceChannel } from '../Shutter4xDevice';
+import { ShutterDevice, ShutterDeviceChannel } from '../ShutterDevice';
 
 @Component({
-  selector: 'shutter4x-config',
+  selector: 'shutter-config',
   providers: [RestDataService],
-  template: require('./shutter4xConfig.html')
+  template: require('./shutterConfig.html')
 })
-export class Shutter4xConfigComponent implements OnInit, OnDestroy {
-  deviceConfig:Shutter4xDevice;
+export class ShutterConfigComponent implements OnInit, OnDestroy {
+  deviceConfig:ShutterDevice;
 
   public deviceId;
   private sub:any;
@@ -17,7 +17,7 @@ export class Shutter4xConfigComponent implements OnInit, OnDestroy {
   public submitted:boolean = false;
 
   constructor(private _dataService: RestDataService, private route: ActivatedRoute) {
-    this.deviceConfig = new Shutter4xDevice();
+    this.deviceConfig = new ShutterDevice();
     console.log(this.deviceConfig);
   }
  
@@ -34,19 +34,12 @@ export class Shutter4xConfigComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  public getImage(type) {
-      if(type == 'DEVICE_TYPE_SHUTTER4X')
-        return 'app/smarthab/rollershutter-60.png';
-      if(type == 'DEVICE_TYPE_SWITCH')
-        return 'app/smarthab/wallswitch.png';
-  }
-
   private getDeviceConfig(): void {
       this._dataService
           .GetShutterDeviceConfig(this.deviceId)
-          .subscribe((data:Shutter4xDevice) => this.deviceConfig = data,
+          .subscribe((data:ShutterDevice) => this.deviceConfig = data,
               error => console.log(error),
-              () => console.log('Get Shutter4xDevice config complete'));
+              () => console.log('Get ShutterDevice config complete'));
   }
 
   public onSubmit():void {
