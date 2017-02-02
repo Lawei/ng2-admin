@@ -17,7 +17,6 @@ export class RestDataService {
         this.actionUrl = _configuration.ServerWithApiUrl + 'smarthab/';
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
-        this.headers.append('Accept', 'application/json');
     }
  
     public GetAll = (): Observable<Device[]> => {
@@ -31,6 +30,12 @@ export class RestDataService {
             .map((response: Response) => <ShutterDevice>response.json())
             .catch(this.handleError);
     }
+
+    public UpdateShutterDevieConfig = (id: number, newConfig: ShutterDevice): Observable<Response> => {
+        return this._http.put(this.actionUrl +'config/shutter?device='+id, JSON.stringify(newConfig), { headers: this.headers })
+            .catch(this.handleStrError);
+    }
+
  /*
     public GetSingle = (id: number): Observable<Device> => {
         return this._http.get(this.actionUrl + id)
@@ -46,18 +51,20 @@ export class RestDataService {
             .catch(this.handleError);
     }
  
-    public Update = (id: number, itemToUpdate: Device): Observable<Device> => {
-        return this._http.put(this.actionUrl + id, JSON.stringify(itemToUpdate), { headers: this.headers })
-            .map((response: Response) => <Device>response.json())
-            .catch(this.handleError);
-    }
+
  
     public Delete = (id: number): Observable<Response> => {
         return this._http.delete(this.actionUrl + id)
             .catch(this.handleError);
     }
     */
- 
+
+    public handleStrError(error: Response) {
+        console.error("Status="+error.status+" Msg="+error.text());
+        return Observable.throw(error.text() || 'Server error');
+    } 
+
+
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');

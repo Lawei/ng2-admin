@@ -1,7 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RestDataService } from '../restdata.service';
 import { ShutterDevice, ShutterDeviceChannel } from '../ShutterDevice';
+import { Response, Headers } from '@angular/http';
 
 @Component({
   selector: 'shutter-config',
@@ -13,20 +14,21 @@ export class ShutterConfigComponent implements OnInit, OnDestroy {
 
   public deviceId;
   private sub:any;
+  private servererror:string;
 
   public submitted:boolean = false;
 
-  constructor(private _dataService: RestDataService, private route: ActivatedRoute) {
+  constructor(private _dataService: RestDataService, private _route: ActivatedRoute, private _router: Router) {
     this.deviceConfig = new ShutterDevice();
     console.log(this.deviceConfig);
   }
  
   ngOnInit() {
-      this.sub = this.route.params.subscribe(params => {
+      this.sub = this._route.params.subscribe(params => {
 
           this.deviceId = params['id'];
       });
-      //this.getDeviceConfig();
+      this.getDeviceConfig();
   }
 
   ngOnDestroy() {
@@ -42,13 +44,21 @@ export class ShutterConfigComponent implements OnInit, OnDestroy {
               () => console.log('Get ShutterDevice config complete'));
   }
 
-  public onSubmit():void {
-    this.submitted = true;
-    //if (this.form.valid) {
-      // your code goes here
-      console.log(this.deviceConfig);
-    //}
+  public cancelEdit():void {
+    this._router.navigateByUrl('pages/devices');
   }
 
-  
+  public onSubmit():void {
+    this.submitted = true;
+    this._dataService.UpdateShutterDevieConfig(this.deviceId, this.deviceConfig).subscribe(
+      response => {
+        this.servererror = "";
+        this._router.navigateByUrl('pages/devices');
+      },
+      error => {
+        this.servererror = "Error: "+error;
+      }
+    );
+    
+  }  
 }
