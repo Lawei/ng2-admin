@@ -7,9 +7,12 @@
               <label>Device Name</label>
               <input type="text" class="form-control" [(ngModel)]="deviceConfig.name" #name="ngModel" name="name" required>
           </div>
+          <div class="form-group" [ngClass]="{'has-error': (!overdrive.valid && overdrive.touched), 'has-success': (overdrive.valid && overdrive.touched)}">
+              <label>Overdrive in &#37; (Additional movement to savely reach end positions)</label>
+              <input type="number" min="1" max="255" step="1" class="form-control" [(ngModel)]="deviceConfig.overdrive" #overdrive="ngModel" name="overdrive" required>
+          </div>
           <div class="row">
             <div class="col-md-3" *ngFor="let channel of deviceConfig.channels; let i = index">
-              <!--<ba-card class="no-top-border" title="Channel #{{i+1}} Configuration" baCardClass="with-scroll">-->
                 <h4 class="grid-h">Channel #{{i+1}} Configuration</h4>
                 <div class="form-group" [ngClass]="{'has-error': (!channelname.valid && channelname.touched), 'has-success': (channelname.valid && channelname.touched)}">
                     <label>Channel Name</label>
@@ -35,10 +38,17 @@
                     <label>Move time open to close (ms)</label>
                     <input type="number" [readonly]="(channel.motor_sense_cfg != 'MOTOR_SENSE_OFF' )" min="1" max="60000" step="1" class="form-control" [(ngModel)]="channel.move_time_down" name="move_time_down_{{i}}" #movetimedown="ngModel">
                 </div>
-              <!--</ba-card>-->
             </div>
           </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!shutterConfigForm.form.valid">Save</button>
+          <div class="row">
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" [disabled]="!shutterConfigForm.form.valid">Save</button>
+              <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
+            </div>
+            <div class="col-md-6 color-widget">
+              <div class="section-block red-text"><p>{{servererror}}&nbsp;</p></div>
+            </div>
+          </div>
       </form>
       </ba-card>
     </div>
