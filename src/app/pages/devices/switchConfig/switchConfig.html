@@ -1,22 +1,31 @@
 <div class="widgets">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
       <ba-card title="Switch Configuration for #{{ deviceId }}" baCardClass="with-scroll">
         <form #switchConfigForm="ngForm" (ngSubmit)="onSubmit()">
           <div class="form-group" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
               <label>Device Name</label>
               <input type="text" class="form-control" [(ngModel)]="deviceConfig.name" #name="ngModel" name="name" required>
           </div>
-          <div class="row">
-            <div class="col-md-3" *ngFor="let button of deviceConfig.buttons; let i = index">
+          <div class="form-group">
+              <label>Select Button</label>
+              <select class="form-control" [(ngModel)]="selectedButton" name="selected_button">
+                <option *ngFor="let button of deviceConfig.buttons; let i = index" [value]="i">{{i+1}} - {{button.name}}</option>
+              </select>
+          </div>
+          <p>&nbsp;</p>
+          
+          <div *ngFor="let button of deviceConfig.buttons; let i = index">
+            <div *ngIf="selectedButton == i">
                 <h4 class="grid-h">Button #{{i+1}} Configuration</h4>
+                <div class="separator"></div>
                 <div class="form-group" [ngClass]="{'has-error': (!buttonname.valid && buttonname.touched), 'has-success': (buttonname.valid && buttonname.touched)}">
                     <label>Button Name</label>
                     <input type="text" class="form-control" [(ngModel)]="button.name" name="button_name_{{i}}" #buttonname="ngModel" required>
                 </div>
-                <div class="form-group" [ngClass]="{'has-error': (!buttonfunc.valid && buttonfunc.touched), 'has-success': (buttonfunc.valid && buttonfunc.touched)}">
+                <div class="form-group">
                     <label>Switch function</label>
-                    <select class="form-control" [(ngModel)]="button.func" name="button_func_{{i}}" #buttonfunc="ngModel">
+                    <select class="form-control" [(ngModel)]="button.func" name="button_func_{{i}}">
                       <option value="SWITCH_FUNCT_SWITCH">Normal Switch (On/Off/Toggle)</option>
                       <option value="SWITCH_FUNCT_DIMM" disabled>Dimmer (Not implemented yet)</option>
                       <option value="SWITCH_FUNCT_SHUTTER">Shutter Control</option>
@@ -28,9 +37,9 @@
                   <div class="checkbox">
                     <ba-checkbox [(ngModel)]="button.sw_press_en" [label]="'Enable Button Pressed Event'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
                   </div>
-                  <div *ngIf="button.sw_press_en" class="form-group" [ngClass]="{'has-error': (!buttonswpress.valid && buttonswpress.touched), 'has-success': (buttonswpress.valid && buttonswpress.touched)}">
+                  <div *ngIf="button.sw_press_en" class="form-group">
                     <label>Function for Press</label>
-                    <select class="form-control" [(ngModel)]="button.sw_cmd_press" name="button_sw_press_{{i}}" #buttonswpress="ngModel">
+                    <select class="form-control" [(ngModel)]="button.sw_cmd_press" name="button_sw_press_{{i}}">
                       <option value="SWITCH_MODE_OFF">Off</option>
                       <option value="SWITCH_MODE_ON">On</option>
                       <option value="SWITCH_MODE_TOGGLE">Toggle</option>
@@ -39,9 +48,9 @@
                   <div class="checkbox">
                     <ba-checkbox [(ngModel)]="button.sw_release_en" [label]="'Enable Button Release Event'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
                   </div>
-                  <div *ngIf="button.sw_release_en" class="form-group" [ngClass]="{'has-error': (!buttonswrelease.valid && buttonswrelease.touched), 'has-success': (buttonswrelease.valid && buttonswrelease.touched)}">
+                  <div *ngIf="button.sw_release_en" class="form-group">
                     <label>Function for Release</label>
-                    <select class="form-control" [(ngModel)]="button.sw_cmd_release" name="button_sw_release_{{i}}" #buttonswrelease="ngModel">
+                    <select class="form-control" [(ngModel)]="button.sw_cmd_release" name="button_sw_release_{{i}}">
                       <option value="SWITCH_MODE_OFF">Off</option>
                       <option value="SWITCH_MODE_ON">On</option>
                       <option value="SWITCH_MODE_TOGGLE">Toggle</option>
@@ -52,18 +61,18 @@
                   <!-- Not implemented yet -->
                 </div>
                 <div *ngIf="button.func == 'SWITCH_FUNCT_SHUTTER'">
-                  <div class="form-group" [ngClass]="{'has-error': (!buttonshuttermode.valid && buttonshuttermode.touched), 'has-success': (buttonshuttermode.valid && buttonshuttermode.touched)}">
+                  <div class="form-group">
                       <label>Shutter Mode</label>
-                      <select class="form-control" [(ngModel)]="button.shutter_mode" name="button_shutter_mode_{{i}}" #buttonshuttermode="ngModel">
+                      <select class="form-control" [(ngModel)]="button.shutter_mode" name="button_shutter_mode_{{i}}">
                         <option value="SWITCH_SHUTTER_MODE_SLS">Short-Long-Short</option>
                         <option value="SWITCH_SHUTTER_MODE_LS">Long-Short</option>
                         <option value="SWITCH_SHUTTER_MODE_SL">Short-Long</option>
                         <option value="SWITCH_SHUTTER_MODE_LSS">Long-Short/Short</option>
                       </select>
                   </div>
-                  <div class="form-group" [ngClass]="{'has-error': (!buttonshutterdir.valid && buttonshutterdir.touched), 'has-success': (buttonshutterdir.valid && buttonshutterdir.touched)}">
+                  <div class="form-group">
                       <label>Move direction</label>
-                      <select class="form-control" [(ngModel)]="button.shutter_dir" name="button_shutter_dir_{{i}}" #buttonshutterdir="ngModel">
+                      <select class="form-control" [(ngModel)]="button.shutter_dir" name="button_shutter_dir_{{i}}">
                         <option value="SWITCH_DIRECTION_UP">Up</option>
                         <option value="SWITCH_DIRECTION_DOWN">Down</option>
                       </select>
@@ -84,13 +93,14 @@
                 </div>
             </div>
           </div>
+          <div class="separator"></div>
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-12 color-widget">
+              <div class="section-block red-text"><p>{{servererror}}</p></div>
+            </div>
+            <div class="col-md-12">
               <button type="submit" class="btn btn-primary" [disabled]="!switchConfigForm.form.valid">Save</button>
               <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
-            </div>
-            <div class="col-md-6 color-widget">
-              <div class="section-block red-text"><p>{{servererror}}&nbsp;</p></div>
             </div>
           </div>
       </form>

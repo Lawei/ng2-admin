@@ -16,7 +16,7 @@ export class SwitchConfigComponent implements OnInit, OnDestroy {
   private sub:any;
   private servererror:string;
 
-  public selectedButton:SwitchDeviceButton;
+  public selectedButton:number = 0;
 
   public submitted:boolean = false;
 
