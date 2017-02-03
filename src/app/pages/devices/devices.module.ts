@@ -7,6 +7,7 @@ import { RestDataService } from './restdata.service';
 import { Configuration } from './devices.constants';
 import { DevicesTableComponent } from './devicesTable/devicesTable.component';
 import { ShutterConfigComponent } from './shutterConfig/shutterConfig.component'
+import { SwitchConfigComponent } from './switchConfig/switchConfig.component'
 import { NgaModule } from '../../theme/nga.module';
 
 
@@ -21,6 +22,7 @@ import { NgaModule } from '../../theme/nga.module';
     DevicesComponent,
     DevicesTableComponent,
     ShutterConfigComponent,
+    SwitchConfigComponent,
   ],
   providers: [
     RestDataService,

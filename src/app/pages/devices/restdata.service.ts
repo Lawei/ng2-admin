@@ -5,6 +5,7 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Device } from './Device';
 import { ShutterDevice } from './ShutterDevice';
+import { SwitchDevice } from './SwitchDevice';
 import { Configuration } from './devices.constants';
  
 @Injectable()
@@ -33,6 +34,17 @@ export class RestDataService {
 
     public UpdateShutterDevieConfig = (id: number, newConfig: ShutterDevice): Observable<Response> => {
         return this._http.put(this.actionUrl +'config/shutter?device='+id, JSON.stringify(newConfig), { headers: this.headers })
+            .catch(this.handleStrError);
+    }
+
+    public GetSwitchDeviceConfig = (id: number): Observable<SwitchDevice> => {
+        return this._http.get(this.actionUrl+'config/switch?device='+id)
+            .map((response: Response) => <ShutterDevice>response.json())
+            .catch(this.handleError);
+    }
+
+    public UpdateSwitchDevieConfig = (id: number, newConfig: SwitchDevice): Observable<Response> => {
+        return this._http.put(this.actionUrl +'config/switch?device='+id, JSON.stringify(newConfig), { headers: this.headers })
             .catch(this.handleStrError);
     }
 

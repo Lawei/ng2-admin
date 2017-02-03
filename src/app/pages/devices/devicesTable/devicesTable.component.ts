@@ -26,6 +26,13 @@ export class DevicesTableComponent implements OnInit {
         return 'app/smarthab/wallswitch.png';
   }
 
+  public getDeviceConfigRouterLink(device:Device) {
+    if(device.type == 'DEVICE_TYPE_SHUTTER4X')
+      return ['/pages/devices/shutterconfig', device.id];
+    if(device.type == 'DEVICE_TYPE_SWITCH')
+      return ['/pages/devices/switchconfig', device.id];
+  }
+
   private getDevices(): void {
       
       this._dataService
