@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { RestDataService } from '../restdata.service';
-import { ShutterDevice, ShutterDeviceChannel } from '../ShutterDevice';
+import { RestDataService } from '../../../restdata.service';
+import { ShutterDevice, ShutterDeviceChannel } from '../../../types/ShutterDevice';
 import { Response, Headers } from '@angular/http';
 
 @Component({

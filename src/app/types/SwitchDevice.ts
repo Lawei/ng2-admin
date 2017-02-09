@@ -2,7 +2,7 @@ import { Device } from './Device';
 
 export class SwitchDeviceButton {
 	 public name:string;
-	 public func:string; // Possible Values: SWITCH_FUNCT_SWITCH, SWITCH_FUNCT_DIMM, SWITCH_FUNCT_SHUTTER, SWITCH_FUNCT_VALUE, SWITCH_FUNCT_SZENE
+	 public func:string; // Possible Values: SWITCH_FUNCT_SWITCH, SWITCH_FUNCT_DIMM, SWITCH_FUNCT_SHUTTER, SWITCH_FUNCT_VALUE, SWITCH_FUNCT_SCENE
 	 
 	 /* Configuration elements for function SWITCH_FUNCT_SWITCH */
 	 public sw_press_en:boolean;

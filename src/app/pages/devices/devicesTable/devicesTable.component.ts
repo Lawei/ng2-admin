@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { Device } from '../Device';
-import { RestDataService } from '../restdata.service';
+import { Device } from '../../../types/Device';
+import { RestDataService } from '../../../restdata.service';
 
 @Component({
   selector: 'devices-table',
@@ -33,10 +33,14 @@ export class DevicesTableComponent implements OnInit {
       return ['/pages/devices/switchconfig', device.id];
   }
 
+  getJunctionConfigRouterLink(device:Device) {
+    return ['/pages/devices/junctionconfig', device.id];
+  }
+
   private getDevices(): void {
       
       this._dataService
-          .GetAll()
+          .GetDeviceList()
           .subscribe((data:Device[]) => this.devicesTableData = data,
               error => console.log(error),
               () => console.log('Get all Devices complete'));

@@ -1,0 +1,24 @@
+<div class="horizontal-scroll">
+  <table class="table table-hover">
+    <thead>
+    <tr class="black-muted-bg">
+     <!-- <th class="browser-icons"></th>-->
+      <th>Name</th>
+      <th>Object-Type</th>
+      <th>Data-Type</th>
+      <th>Group #Id</th>
+      <th class="browser-icons"></th>
+    </tr>
+    </thead>
+    <tbody>
+     <tr *ngFor="let g of groupsTableData" class="no-top-border">
+      <!--<td><img src="{{ ( getImage(g.objtype) | baAppPicture ) }}" width="30" height="30"></td>-->
+      <td ngClass="nowrap">{{g.name}}</td>
+      <td>{{g.objtype}}</td>
+      <td>{{g.datatype}}</td>
+      <td>{{g.id}}</td>
+      <td><a [routerLink]="getGroupConfigRouterLink(g)" title="Group Configuration"><i class="ion-wrench"></i></a></td>
+     </tr>
+    </tbody>
+  </table>
+</div>

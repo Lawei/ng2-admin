@@ -30,7 +30,7 @@
                       <option value="SWITCH_FUNCT_DIMM" disabled>Dimmer (Not implemented yet)</option>
                       <option value="SWITCH_FUNCT_SHUTTER">Shutter Control</option>
                       <option value="SWITCH_FUNCT_VALUE" disabled>Set Value (Not implemented yet)</option>
-                      <option value="SWITCH_FUNCT_SZENE">Set Scene</option>
+                      <option value="SWITCH_FUNCT_SCENE">Set Scene</option>
                     </select>
                 </div>
                 <div *ngIf="button.func == 'SWITCH_FUNCT_SWITCH'">
@@ -85,7 +85,7 @@
                 <div *ngIf="button.func == 'SWITCH_FUNCT_VALUE'">
                   <!-- Not implemented yet -->
                 </div>
-                <div *ngIf="button.func == 'SWITCH_FUNCT_SZENE'">
+                <div *ngIf="button.func == 'SWITCH_FUNCT_SCENE'">
                   <div class="form-group" [ngClass]="{'has-error': (!buttonsceneid.valid && buttonsceneid.touched), 'has-success': (buttonsceneid.valid && buttonsceneid.touched)}">
                     <label>SceneId</label>
                     <input type="number" min="1" max="60000" step="1" class="form-control" [(ngModel)]="button.sceneid" name="button_sceneid_{{i}}" #buttonsceneid="ngModel">

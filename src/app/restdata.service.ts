@@ -3,10 +3,11 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map'
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
-import { Device } from './Device';
-import { ShutterDevice } from './ShutterDevice';
-import { SwitchDevice } from './SwitchDevice';
-import { Configuration } from './devices.constants';
+import { Device } from './types/Device';
+import { Group } from './types/Group';
+import { ShutterDevice } from './types/ShutterDevice';
+import { SwitchDevice } from './types/SwitchDevice';
+import { Configuration } from './app.constants';
  
 @Injectable()
 export class RestDataService {
@@ -20,9 +21,15 @@ export class RestDataService {
         this.headers.append('Content-Type', 'application/json');
     }
  
-    public GetAll = (): Observable<Device[]> => {
+    public GetDeviceList = (): Observable<Device[]> => {
         return this._http.get(this.actionUrl+'devices')
             .map((response: Response) => <Device[]>response.json())
+            .catch(this.handleError);
+    }
+
+    public GetGroupList = (): Observable<Group[]> => {
+        return this._http.get(this.actionUrl+'groups')
+            .map((response: Response) => <Group[]>response.json())
             .catch(this.handleError);
     }
 

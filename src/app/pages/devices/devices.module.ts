@@ -3,9 +3,8 @@ import { CommonModule }  from '@angular/common';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { DevicesComponent } from './devices.component';
 import { routing } from './devices.routing';
-import { RestDataService } from './restdata.service';
-import { Configuration } from './devices.constants';
 import { DevicesTableComponent } from './devicesTable/devicesTable.component';
+import { JunctionConfigComponent } from './junctionConfig/junctionConfig.component';
 import { ShutterConfigComponent } from './shutterConfig/shutterConfig.component'
 import { SwitchConfigComponent } from './switchConfig/switchConfig.component'
 import { NgaModule } from '../../theme/nga.module';
@@ -21,12 +20,11 @@ import { NgaModule } from '../../theme/nga.module';
   declarations: [
     DevicesComponent,
     DevicesTableComponent,
+    JunctionConfigComponent,
     ShutterConfigComponent,
     SwitchConfigComponent,
   ],
   providers: [
-    RestDataService,
-    Configuration
   ]
 })
 export class DevicesModule {}

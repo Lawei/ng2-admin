@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { RestDataService } from '../restdata.service';
-import { SwitchDevice, SwitchDeviceButton } from '../SwitchDevice';
+import { RestDataService } from '../../../restdata.service';
+import { SwitchDevice, SwitchDeviceButton } from '../../../types/SwitchDevice';
 import { Response, Headers } from '@angular/http';
 
 @Component({
