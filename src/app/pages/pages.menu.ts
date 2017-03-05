@@ -19,7 +19,7 @@ export const PAGES_MENU = [
         path: 'groups',  // path for our page
         data: { // custom menu declaration
           menu: {
-            title: 'Junction-Groups', // menu title
+            title: 'Groups', // menu title
             icon: 'ion-link', // menu icon
             pathMatch: 'prefix', // use it if item children not displayed in menu
             selected: false,

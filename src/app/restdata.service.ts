@@ -8,6 +8,8 @@ import { Group } from './types/Group';
 import { ShutterDevice } from './types/ShutterDevice';
 import { SwitchDevice } from './types/SwitchDevice';
 import { Configuration } from './app.constants';
+import { GroupConfig } from './types/GroupConfig';
+import { CommunicationObject } from './types/CommunicationObject';
  
 @Injectable()
 export class RestDataService {
@@ -40,7 +42,7 @@ export class RestDataService {
     }
 
     public UpdateShutterDevieConfig = (id: number, newConfig: ShutterDevice): Observable<Response> => {
-        return this._http.put(this.actionUrl +'config/shutter?device='+id, JSON.stringify(newConfig), { headers: this.headers })
+        return this._http.put(this.actionUrl +'config/shutter?device='+id, JSON.stringify(newConfig), { headers: this.headers } )
             .catch(this.handleStrError);
     }
 
@@ -51,8 +53,25 @@ export class RestDataService {
     }
 
     public UpdateSwitchDevieConfig = (id: number, newConfig: SwitchDevice): Observable<Response> => {
-        return this._http.put(this.actionUrl +'config/switch?device='+id, JSON.stringify(newConfig), { headers: this.headers })
+        return this._http.put(this.actionUrl +'config/switch?device='+id, JSON.stringify(newConfig), { headers: this.headers } )
             .catch(this.handleStrError);
+    }
+
+    public GetGroupConfiguration = (id: number): Observable<GroupConfig[]> => {
+        return this._http.get(this.actionUrl+'groupConfig?group='+id)
+            .map((response: Response) => <GroupConfig[]>response.json())
+            .catch(this.handleError);
+    }
+
+    public UpdateGroupConfiguration = (id: number, newConfig: GroupConfig[]): Observable<Response> => {
+        return this._http.put(this.actionUrl +'config/groupConfig?group='+id, JSON.stringify(newConfig), { headers: this.headers } )
+            .catch(this.handleStrError);
+    }
+
+    public GetCompatibleComObjects = (id: number): Observable<CommunicationObject[]> => {
+        return this._http.get(this.actionUrl+'compatibleComObjs?group='+id)
+            .map((response: Response) => <CommunicationObject[]>response.json())
+            .catch(this.handleError);
     }
 
  /*

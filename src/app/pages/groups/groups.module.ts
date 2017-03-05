@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { GroupsComponent } from './groups.component';
 import { GroupConfigComponent } from './groupConfig/groupConfig.component';
 import { routing } from './groups.routing';
+import { DropdownModule } from 'ng2-bootstrap';
 import { GroupsTableComponent } from './groupsTable/groupsTable.component';
 
 import { NgaModule } from '../../theme/nga.module';
@@ -14,7 +15,8 @@ import { NgaModule } from '../../theme/nga.module';
     CommonModule,
     routing,
     NgaModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule,
+    DropdownModule.forRoot(),
   ],
   declarations: [
     GroupsComponent,

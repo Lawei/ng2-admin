@@ -21,6 +21,12 @@ export class GroupsTableComponent implements OnInit {
     return ['/pages/groups/groupconfig', group.id];
   }
 
+  public getImage(objectType) : string {
+    if(objectType == 'TYPE_SHUTTER')
+      return 'app/smarthab/rollershutter-60.png';
+    return '';
+  }
+
   private getGroups(): void {
       this._dataService
           .GetGroupList()

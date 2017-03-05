@@ -1,24 +1,122 @@
-<div class="horizontal-scroll">
-  <table class="table table-hover">
-    <thead>
-    <tr class="black-muted-bg">
-      <th class="browser-icons"></th>
-      <th>Name</th>
-      <th>Typ</th>
-      <th>Device #Id</th>
-      <th>Version</th>
-      <th class="browser-icons"></th>
-    </tr>
-    </thead>
-    <tbody>
-<!--    <tr *ngFor="let d of devicesTableData" class="no-top-border">
-      <td><img src="{{ ( getImage(d.type) | baAppPicture ) }}" width="30" height="30"></td>
-      <td ngClass="nowrap">{{d.name}}</td>
-      <td>{{d.type}}</td>
-      <td>{{d.id}}</td>
-      <td>{{d.version}}</td>
-      <td><a [routerLink]="getDeviceConfigRouterLink(d)"><i class="ion-wrench"></i></a></td>
-    </tr>-->
-    </tbody>
-  </table>
+<div class="widgets">
+
+  <div class="row">
+    <div class="col-xs-8">
+      <ba-card title="Communication Objects of Group #{{groupId}}" baCardClass="table-panel">
+        <form #gcfgForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="horizontal-scroll">
+            <h4 class="grid-h">Sensors</h4>
+            <table class="table table-hover">
+              <thead>
+              <tr class="black-muted-bg">
+                <th class="browser-icons"></th>
+                <th>Name</th>
+                <th>Function</th>
+                <th *ngIf="advanced">RD</th>
+                <th *ngIf="advanced">WR</th>
+                <th *ngIf="advanced">Listen</th>
+                <th *ngIf="advanced">Send</th>
+                <th *ngIf="advanced">Priority</th>
+                <th class="browser-icons"></th> 
+              </tr>
+              </thead>
+              <tbody>
+                <template ngFor let-i="index" let-gcfg [ngForOf]="groupConfigData">
+                  <tr *ngIf="gcfg.comObj.sensor" class="no-top-border">
+                    <td><img src="{{ ( getImage(gcfg.comObj.deviceId) | baAppPicture ) }}" width="30" height="30"></td>
+                    <td ngClass="nowrap">{{gcfg.comObj.name}}</td>
+                    <td ngClass="nowrap">{{gcfg.comObj.description}}</td>
+                    <td *ngIf="advanced"><ba-checkbox [(ngModel)]="gcfg.readable" [label]="'&nbsp;'" name="gcfg_readable_{{i}}"></ba-checkbox></td>
+                    <td *ngIf="advanced"><ba-checkbox [(ngModel)]="gcfg.writeable" [label]="'&nbsp;'" name="gcfg_writeable_{{i}}"></ba-checkbox></td>
+                    <td *ngIf="advanced"><ba-checkbox [(ngModel)]="gcfg.listen" [label]="'&nbsp;'" name="gcfg_listen_{{i}}"></ba-checkbox></td>
+                    <td *ngIf="advanced"><ba-checkbox [(ngModel)]="gcfg.send" [label]="'&nbsp;'" name="gcfg_send_{{i}}"></ba-checkbox></td>
+                    <td *ngIf="advanced"><select class="form-control" [(ngModel)]="gcfg.priority" name="gcfg_priority_{{i}}">
+                        <option value="SYSTEM">System (Highest)</option>
+                        <option value="ALARM">Alarm</option>
+                        <option value="HIGH">High</option>
+                        <option value="NORMAL">Normal (lowest)</option>
+                      </select></td>
+                    <td><a href="javascript:void(0)" (click)="removeComObj(i)"><i class="ion-trash-a"></i></a></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+            <div class="btn-group" dropdown>
+              <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
+                Select a Sensor Object to add...
+              </button>
+              <ul class="dropdown-menu" dropdownMenu>
+                <template ngFor let-i="index" let-comObj [ngForOf]="compatibleComObjs">
+                  <li class="dropdown-item" *ngIf="comObj.sensor">
+                    <a href="javascript:void(0)" (click)="addComObject(i)">{{comObj.name}} - {{comObj.description}}</a>
+                  </li>
+                </template>
+              </ul>
+            </div>
+            <p>&nbsp;</p>
+            <h4 class="grid-h">Actors</h4>
+            <table class="table table-hover">
+              <thead>
+              <tr class="black-muted-bg">
+                <th class="browser-icons"></th>
+                <th>Name</th>
+                <th>Function</th>
+                <th *ngIf="advanced">RD</th>
+                <th *ngIf="advanced">WR</th>
+                <th *ngIf="advanced">Listen</th>
+                <th *ngIf="advanced">Send</th>
+                <th *ngIf="advanced">Priority</th>
+                <th class="browser-icons"></th> 
+              </tr>
+              </thead>
+              <tbody>
+                <template ngFor let-i="index" let-gcfg [ngForOf]="groupConfigData">
+                <tr *ngIf="!gcfg.comObj.sensor" class="no-top-border">
+                  <td><img src="{{ ( getImage(gcfg.comObj.deviceId) | baAppPicture ) }}" width="30" height="30"></td>
+                  <td ngClass="nowrap">{{gcfg.comObj.name}}</td>
+                  <td ngClass="nowrap">{{gcfg.comObj.description}}</td>
+                  <td *ngIf="advanced"><ba-checkbox [(ngModel)]="gcfg.readable" [label]="'&nbsp;'" name="gcfg_readable_{{i}}"></ba-checkbox></td>
+                  <td *ngIf="advanced"><ba-checkbox [(ngModel)]="gcfg.writeable" [label]="'&nbsp;'" name="gcfg_writeable_{{i}}"></ba-checkbox></td>
+                  <td *ngIf="advanced"><ba-checkbox [(ngModel)]="gcfg.listen" [label]="'&nbsp;'" name="gcfg_listen_{{i}}"></ba-checkbox></td>
+                  <td *ngIf="advanced"><ba-checkbox [(ngModel)]="gcfg.send" [label]="'&nbsp;'" name="gcfg_send_{{i}}"></ba-checkbox></td>
+                  <td *ngIf="advanced"><select class="form-control" [(ngModel)]="gcfg.priority" name="gcfg_priority_{{i}}">
+                      <option value="SYSTEM">System (Highest)</option>
+                      <option value="ALARM">Alarm</option>
+                      <option value="HIGH">High</option>
+                      <option value="NORMAL">Normal (lowest)</option>
+                    </select></td>
+                  <td><a href="javascript:void(0)" (click)="removeComObj(i)"><i class="ion-trash-a"></i></a></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+            <div class="btn-group" dropdown>
+              <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
+                Select a Actor Object to add...
+              </button>
+              <ul class="dropdown-menu" dropdownMenu>
+                <template ngFor let-i="index" let-comObj [ngForOf]="compatibleComObjs">
+                  <li class="dropdown-item" *ngIf="!comObj.sensor">
+                    <a href="javascript:void(0)" (click)="addComObject(i)">{{comObj.name}} - {{comObj.description}}</a>
+                  </li>
+                </template>
+              </ul>
+            </div>
+            <p>&nbsp;</p>
+            <ba-checkbox [(ngModel)]="advanced" [label]="'Show Advanced Options'" name="advanced"></ba-checkbox>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
+            </div>
+            <div class="col-md-6 color-widget">
+              <div class="section-block red-text"><p>{{servererror}}&nbsp;</p></div>
+            </div>
+          </div>
+        </form>
+      </ba-card>
+    </div>
+  </div>
+
 </div>
