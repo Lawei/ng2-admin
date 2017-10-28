@@ -15,16 +15,18 @@ export class GroupConfig {
 
     public deviceId:number; //!< Device this configuration resides on
 
-    constructor(comObj:CommunicationObject, groupCfg:GroupConfig) {
+
+
+    constructor(comObj:CommunicationObject, groupCfg?:GroupConfig, prio?:string, msgAddr?:number, metaType?:string) {
         this.comObj = comObj;
         this.active = true;
         this.readable = false;
         this.writeable = !comObj.sensor;
         this.listen = false;
         this.send = false;
-        this.priority = groupCfg.priority;
-        this.messageAddress = groupCfg.messageAddress;
-        this.metaType = groupCfg.metaType;
+        this.priority = groupCfg && groupCfg.priority || prio;
+        this.messageAddress = groupCfg && groupCfg.messageAddress || msgAddr;
+        this.metaType = groupCfg && groupCfg.metaType || metaType;
         this.objectType = comObj.objectType;
         this.deviceId = comObj.deviceId;
     }

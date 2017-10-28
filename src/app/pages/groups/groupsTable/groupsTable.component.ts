@@ -10,6 +10,8 @@ import { RestDataService } from '../../../restdata.service';
 export class GroupsTableComponent implements OnInit {
 
   groupsTableData:Array<Group>;
+  public newGroupName:string = '';
+  public servererror:string = '';
 
   constructor(private _dataService: RestDataService) {}
  
@@ -22,9 +24,30 @@ export class GroupsTableComponent implements OnInit {
   }
 
   public getImage(objectType) : string {
-    if(objectType == 'TYPE_SHUTTER')
-      return 'app/smarthab/rollershutter-60.png';
-    return '';
+    switch(objectType) { 
+      case 'TYPE_SHUTTER':
+        return 'app/smarthab/rollershutter-60.png';
+      default:
+        return 'app/smarthab/unknown.png';
+    }
+  }
+
+// TODO: Add function to delete Group directly from all devices!
+
+  addNewGroup($event) {
+    if (($event.which === 1 || $event.which === 13) && this.newGroupName.trim() != '') {
+      this._dataService.AddGroup(this.newGroupName).subscribe(
+        response => {
+          this.servererror = "";
+          this.getGroups();
+        },
+        error => {
+          this.servererror = "Error: "+error;
+        }
+      )
+
+      this.newGroupName = '';
+    }
   }
 
   private getGroups(): void {

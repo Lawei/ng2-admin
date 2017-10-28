@@ -35,6 +35,13 @@ export class RestDataService {
             .catch(this.handleError);
     }
 
+    public AddGroup = (groupName:string): Observable<Response> => {
+        var newGroup:Group = new Group();
+        newGroup.name = groupName;
+        return this._http.put(this.actionUrl +'groups', JSON.stringify(newGroup), { headers: this.headers } )
+        .catch(this.handleStrError);
+    }
+
     public GetShutterDeviceConfig = (id: number): Observable<ShutterDevice> => {
         return this._http.get(this.actionUrl+'config/shutter?device='+id)
             .map((response: Response) => <ShutterDevice>response.json())
@@ -64,7 +71,7 @@ export class RestDataService {
     }
 
     public UpdateGroupConfiguration = (id: number, newConfig: GroupConfig[]): Observable<Response> => {
-        return this._http.put(this.actionUrl +'config/groupConfig?group='+id, JSON.stringify(newConfig), { headers: this.headers } )
+        return this._http.put(this.actionUrl +'groupConfig?group='+id, JSON.stringify(newConfig), { headers: this.headers } )
             .catch(this.handleStrError);
     }
 

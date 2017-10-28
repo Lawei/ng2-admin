@@ -21,4 +21,15 @@
      </tr>
     </tbody>
   </table>
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Group Name..." (keyup)="addNewGroup($event)" [(ngModel)]="newGroupName" maxlength="32">
+    <span class="input-group-btn">
+      <button class="btn btn-primary" (click)="addNewGroup($event)">
+        Add
+      </button>
+      <div class="col-md-12 color-widget">
+          <div class="section-block red-text"><p>{{servererror}}</p></div>
+        </div>
+    </span>
+  </div>
 </div>

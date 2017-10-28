@@ -12,7 +12,7 @@ import { Device } from '../../../types/Device';
 })
 export class GroupConfigComponent implements OnInit {
     private sub:any;
-    public groupId;
+    public groupId:number;
     private groupConfigData:Array<GroupConfig>;
     private compatibleComObjs:Array<CommunicationObject>;
     private devices : { [key:number]:Device; } = {};
@@ -27,7 +27,7 @@ export class GroupConfigComponent implements OnInit {
 
     ngOnInit() {
         this.sub = this._route.params.subscribe(params => {
-            this.groupId = params['id'];
+            this.groupId = parseInt(params['id'], 10);
         });
         this.getGroupConfig();
     }
@@ -44,10 +44,14 @@ export class GroupConfigComponent implements OnInit {
 
     public getImage(deviceId:number) : string {
         if(deviceId in this.devices) {
-            if(this.devices[deviceId].type == 'DEVICE_TYPE_SHUTTER4X')
+            switch(this.devices[deviceId].type) {
+            case 'DEVICE_TYPE_SHUTTER4X':
                 return 'app/smarthab/rollershutter-60.png';
-            if(this.devices[deviceId].type == 'DEVICE_TYPE_SWITCH')
+            case 'DEVICE_TYPE_SWITCH':
                 return 'app/smarthab/wallswitch.png';
+            default:
+                return 'app/smarthab/unknown.png';
+            }
         }
         return '';
     }
@@ -64,8 +68,23 @@ export class GroupConfigComponent implements OnInit {
     private addComObject(objId:number) {
         if(objId in this.compatibleComObjs) {
             console.log('Add comobj '+this.compatibleComObjs[objId].name);
-            this.groupConfigData.push(new GroupConfig(this.compatibleComObjs[objId],this.groupConfigData[0]));
-            this.compatibleComObjs.splice(objId,1);
+            if(this.groupConfigData.length > 0) {
+                this.groupConfigData.push(new GroupConfig(this.compatibleComObjs[objId],this.groupConfigData[0]));
+                this.compatibleComObjs.splice(objId,1); // remove added object
+            } else {
+                // First element to be added. Determine MetaType!
+                var type = this.compatibleComObjs[objId].valueType;
+                this.groupConfigData.push(new GroupConfig(this.compatibleComObjs[objId], null, 'NORMAL', this.groupId, type));
+                this.compatibleComObjs.splice(objId,1); // remove added object
+                // remove all objects not fitting type anymore
+                for (var i = this.compatibleComObjs.length - 1; i >= 0; i--) {
+                    if (this.compatibleComObjs[i].valueType !== type) {
+                        this.compatibleComObjs.splice(i, 1);
+                    }
+                }
+            }
+            
+            
         } else {
             console.log('Unknown obj: '+objId);
         }
@@ -95,7 +114,6 @@ export class GroupConfigComponent implements OnInit {
             .subscribe((data:Device[]) => devices = data,
             error => console.log(error),
             () => {
-                console.log('Get all Devices complete');
                 for(let d of devices) {
                     this.devices[d.id] = d;
                 }
@@ -104,7 +122,6 @@ export class GroupConfigComponent implements OnInit {
                     .subscribe((data:GroupConfig[]) => this.groupConfigData = data,
                     error => console.log(error),
                     () => {
-                        console.log('Get communication objects for group complete: ');
                         this._dataService
                             .GetCompatibleComObjects(this.groupId)
                             .subscribe((data:CommunicationObject[]) => this.compatibleComObjs = data,
