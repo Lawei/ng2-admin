@@ -5,7 +5,7 @@ import { RestDataService } from '../../../restdata.service';
 @Component({
   selector: 'groups-table',
   providers: [RestDataService],
-  template: require('./groupsTable.html')
+  templateUrl: './groupsTable.html'
 })
 export class GroupsTableComponent implements OnInit {
 

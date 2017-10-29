@@ -7,7 +7,7 @@ import { Response, Headers } from '@angular/http';
 @Component({
   selector: 'shutter-config',
   providers: [RestDataService],
-  template: require('./shutterConfig.html')
+  templateUrl: './shutterConfig.html'
 })
 export class ShutterConfigComponent implements OnInit, OnDestroy {
   deviceConfig:ShutterDevice;

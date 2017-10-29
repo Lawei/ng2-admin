@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { JunctionConfig } from '../../../types/JunctionConfig';
 import { RestDataService } from '../../../restdata.service';
 
 @Component({
   selector: 'junction-config',
   providers: [RestDataService],
-  template: require('./junctionConfig.html')
+  templateUrl: './junctionConfig.html'
 })
 export class JunctionConfigComponent implements OnInit {
 

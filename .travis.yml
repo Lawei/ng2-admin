@@ -5,6 +5,10 @@ language: node_js
 node_js:
   - "6"
 
+cache:
+  directories:
+    - node_modules
+
 addons:
   apt:
     sources:
@@ -13,14 +17,13 @@ addons:
       - g++-4.8
 
 install:
-  - npm config set spin false
-  - npm install -g npm@latest
-
-  - npm install
+  - npm i
 
 script:
-  - npm run build:prod
-  - npm run build:aot
+  - npm run build:ci
+
+git:
+  depth: 1
 
 notifications:
   slack: akveo:q559HckfZMSyZRb803aiLcjH

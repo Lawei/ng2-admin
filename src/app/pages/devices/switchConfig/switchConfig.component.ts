@@ -7,7 +7,7 @@ import { Response, Headers } from '@angular/http';
 @Component({
   selector: 'switch-config',
   providers: [RestDataService],
-  template: require('./switchConfig.html')
+  templateUrl: './switchConfig.html'
 })
 export class SwitchConfigComponent implements OnInit, OnDestroy {
   deviceConfig:SwitchDevice;

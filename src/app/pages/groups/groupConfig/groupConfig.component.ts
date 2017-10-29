@@ -8,7 +8,7 @@ import { Device } from '../../../types/Device';
 @Component({
   selector: 'group-config',
   providers: [RestDataService],
-  template: require('./groupConfig.html')
+  templateUrl: './groupConfig.html'
 })
 export class GroupConfigComponent implements OnInit {
     private sub:any;

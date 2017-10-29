@@ -1,1 +1,1 @@
-export * from './devicesTable.component';
+export * from './groupsTable.component';
