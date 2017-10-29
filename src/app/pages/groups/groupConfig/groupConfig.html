@@ -1,7 +1,7 @@
 <div class="widgets">
 
   <div class="row">
-    <div class="col-xs-8">
+    <div class="col-12 col-sm-6 col-md-8">
       <ba-card title="Communication Objects of Group #{{groupId}}" baCardClass="table-panel">
         <form #gcfgForm="ngForm" (ngSubmit)="onSubmit()">
           <div class="horizontal-scroll">
@@ -21,7 +21,7 @@
               </tr>
               </thead>
               <tbody>
-                <template ngFor let-i="index" let-gcfg [ngForOf]="groupConfigData">
+                <ng-template ngFor let-i="index" let-gcfg [ngForOf]="groupConfigData">
                   <tr *ngIf="gcfg.comObj.sensor" class="no-top-border">
                     <td><img src="{{ ( getImage(gcfg.comObj.deviceId) | baAppPicture ) }}" width="30" height="30"></td>
                     <td ngClass="nowrap">{{gcfg.comObj.name}}</td>
@@ -38,20 +38,22 @@
                       </select></td>
                     <td><a href="javascript:void(0)" (click)="removeComObj(i)"><i class="ion-trash-a"></i></a></td>
                   </tr>
-                </template>
+                </ng-template>
               </tbody>
             </table>
-            <div class="btn-group" dropdown>
-              <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
-                Select a Sensor Object to add...
-              </button>
-              <ul class="dropdown-menu" dropdownMenu>
-                <template ngFor let-i="index" let-comObj [ngForOf]="compatibleComObjs">
-                  <li class="dropdown-item" *ngIf="comObj.sensor">
-                    <a href="javascript:void(0)" (click)="addComObject(i)">{{comObj.name}} - {{comObj.description}}</a>
-                  </li>
-                </template>
-              </ul>
+            <div class="col-sm-4 col-6">
+                <div class="btn-group" ngbDropdown>
+                  <button type="button" class="btn btn-default" ngbDropdownToggle>
+                      Select a Sensor Object to add...
+                  </button>
+                  <ul class="dropdown-menu">
+                    <ng-template ngFor let-i="index" let-comObj [ngForOf]="compatibleComObjs">
+                      <li class="dropdown-item" *ngIf="comObj.sensor">
+                        <a href="javascript:void(0)" (click)="addComObject(i)">{{comObj.name}} - {{comObj.description}}</a>
+                      </li>
+                  </ng-template>
+                  </ul>
+                </div>
             </div>
             <p>&nbsp;</p>
             <h4 class="grid-h">Actors</h4>
@@ -70,7 +72,7 @@
               </tr>
               </thead>
               <tbody>
-                <template ngFor let-i="index" let-gcfg [ngForOf]="groupConfigData">
+                <ng-template ngFor let-i="index" let-gcfg [ngForOf]="groupConfigData">
                 <tr *ngIf="!gcfg.comObj.sensor" class="no-top-border">
                   <td><img src="{{ ( getImage(gcfg.comObj.deviceId) | baAppPicture ) }}" width="30" height="30"></td>
                   <td ngClass="nowrap">{{gcfg.comObj.name}}</td>
@@ -87,20 +89,22 @@
                     </select></td>
                   <td><a href="javascript:void(0)" (click)="removeComObj(i)"><i class="ion-trash-a"></i></a></td>
                   </tr>
-                </template>
+                </ng-template>
               </tbody>
             </table>
-            <div class="btn-group" dropdown>
-              <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
-                Select a Actor Object to add...
-              </button>
-              <ul class="dropdown-menu" dropdownMenu>
-                <template ngFor let-i="index" let-comObj [ngForOf]="compatibleComObjs">
-                  <li class="dropdown-item" *ngIf="!comObj.sensor">
-                    <a href="javascript:void(0)" (click)="addComObject(i)">{{comObj.name}} - {{comObj.description}}</a>
-                  </li>
-                </template>
-              </ul>
+            <div class="col-sm-4 col-6">
+                <div class="btn-group" ngbDropdown>
+                  <button type="button" class="btn btn-default" ngbDropdownToggle>
+                      Select a Actor Object to add...
+                  </button>
+                  <ul class="dropdown-menu">
+                    <ng-template ngFor let-i="index" let-comObj [ngForOf]="compatibleComObjs">
+                      <li class="dropdown-item" *ngIf="!comObj.sensor">
+                        <a href="javascript:void(0)" (click)="addComObject(i)">{{comObj.name}} - {{comObj.description}}</a>
+                      </li>
+                    </ng-template>
+                  </ul>
+                </div>
             </div>
             <p>&nbsp;</p>
             <ba-checkbox [(ngModel)]="advanced" [label]="'Show Advanced Options'" name="advanced"></ba-checkbox>
