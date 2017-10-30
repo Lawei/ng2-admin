@@ -8,6 +8,7 @@
       <th>Data-Type</th>
       <th>Group #Id</th>
       <th class="browser-icons"></th>
+      <th class="browser-icons"></th>
     </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
       <td>{{g.datatype}}</td>
       <td>{{g.id}}</td>
       <td><a [routerLink]="getGroupConfigRouterLink(g)" title="Group Configuration"><i class="ion-wrench"></i></a></td>
+      <td><a href="javascript:void(0)" (click)="deleteGroup(g)" title="Delete Group"><i class="ion-trash-a"></i></a></td>
      </tr>
     </tbody>
   </table>

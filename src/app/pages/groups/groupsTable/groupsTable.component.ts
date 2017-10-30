@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { Group } from '../../../types/Group';
 import { RestDataService } from '../../../restdata.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModal } from '../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'groups-table',
@@ -13,7 +15,7 @@ export class GroupsTableComponent implements OnInit {
   public newGroupName:string = '';
   public servererror:string = '';
 
-  constructor(private _dataService: RestDataService) {}
+  constructor(private _dataService: RestDataService, private modalService: NgbModal) {}
  
   ngOnInit() {
       this.getGroups();
@@ -32,14 +34,32 @@ export class GroupsTableComponent implements OnInit {
     }
   }
 
-// TODO: Add function to delete Group directly from all devices!
+  private deleteGroup(group:Group) {
+    var res;
+    const activeModal = this.modalService.open(ConfirmModal, {size: 'sm'});
+    activeModal.componentInstance.modalHeader = 'Delete';
+    activeModal.componentInstance.modalContent = 'Do you really want to delete Group "'+group.name+'"';
+    activeModal.result.then((result) => {
+      if(result === true) {
+        this._dataService.UpdateGroupConfiguration(group.id, []).subscribe(
+          response => {
+              this.servererror = "";
+              this.getGroups(); // Update group list
+          },
+          error => {
+              this.servererror = "Error: "+error;
+          }
+      );
+      }
+      });
+  }
 
   addNewGroup($event) {
     if (($event.which === 1 || $event.which === 13) && this.newGroupName.trim() != '') {
       this._dataService.AddGroup(this.newGroupName).subscribe(
         response => {
           this.servererror = "";
-          this.getGroups();
+          this.getGroups(); // Update group list
         },
         error => {
           this.servererror = "Error: "+error;
