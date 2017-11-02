@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { Group } from '../../../types/Group';
 import { RestDataService } from '../../../restdata.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmModal } from '../confirm-modal/confirm-modal.component';
+import { ConfirmModal } from '../../modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'groups-table',

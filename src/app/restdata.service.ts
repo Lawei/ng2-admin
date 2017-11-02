@@ -5,10 +5,12 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Device } from './types/Device';
 import { Group } from './types/Group';
+import { Scene } from './types/Scene';
 import { ShutterDevice } from './types/ShutterDevice';
 import { SwitchDevice } from './types/SwitchDevice';
 import { Configuration } from './app.constants';
 import { GroupConfig } from './types/GroupConfig';
+import { SceneConfig } from './types/SceneConfig';
 import { CommunicationObject } from './types/CommunicationObject';
  
 @Injectable()
@@ -39,6 +41,19 @@ export class RestDataService {
         var newGroup:Group = new Group();
         newGroup.name = groupName;
         return this._http.put(this.actionUrl +'groups', JSON.stringify(newGroup), { headers: this.headers } )
+        .catch(this.handleStrError);
+    }
+
+    public GetSceneList = (): Observable<Scene[]> => {
+        return this._http.get(this.actionUrl+'scenes')
+            .map((response: Response) => <Scene[]>response.json())
+            .catch(this.handleError);
+    }
+
+    public AddScene = (sceneName:string): Observable<Response> => {
+        var newScene:Scene = new Scene();
+        newScene.name = sceneName;
+        return this._http.put(this.actionUrl +'scenes', JSON.stringify(newScene), { headers: this.headers } )
         .catch(this.handleStrError);
     }
 
@@ -75,10 +90,26 @@ export class RestDataService {
             .catch(this.handleStrError);
     }
 
-    public GetCompatibleComObjects = (id: number): Observable<CommunicationObject[]> => {
-        return this._http.get(this.actionUrl+'compatibleComObjs?group='+id)
+    public GetCompatibleGroupObjects = (id: number): Observable<CommunicationObject[]> => {
+        return this._http.get(this.actionUrl+'compatibleGroupObjs?group='+id)
             .map((response: Response) => <CommunicationObject[]>response.json())
             .catch(this.handleError);
+    }
+
+    public GetCompatibleSceneObjects = (id: number): Observable<CommunicationObject[]> => {
+        return this._http.get(this.actionUrl+'compatibleSceneObjs?scene='+id)
+            .map((response: Response) => <CommunicationObject[]>response.json())
+            .catch(this.handleError);
+    }
+    public GetSceneConfiguration = (id: number): Observable<SceneConfig[]> => {
+        return this._http.get(this.actionUrl+'sceneConfig?scene='+id)
+            .map((response: Response) => <SceneConfig[]>response.json())
+            .catch(this.handleError);
+    }
+
+    public UpdateSceneConfiguration = (id: number, newConfig: SceneConfig[]): Observable<Response> => {
+        return this._http.put(this.actionUrl +'sceneConfig?scene='+id, JSON.stringify(newConfig), { headers: this.headers } )
+            .catch(this.handleStrError);
     }
 
  /*

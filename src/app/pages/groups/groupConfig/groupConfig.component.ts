@@ -123,7 +123,7 @@ export class GroupConfigComponent implements OnInit {
                     error => console.log(error),
                     () => {
                         this._dataService
-                            .GetCompatibleComObjects(this.groupId)
+                            .GetCompatibleGroupObjects(this.groupId)
                             .subscribe((data:CommunicationObject[]) => this.compatibleComObjs = data,
                             error => console.log(error),
                             () => {

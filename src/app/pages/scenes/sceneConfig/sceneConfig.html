@@ -1,0 +1,62 @@
+<div class="widgets">
+
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-8">
+      <ba-card title="Communication Objects of Scene #{{sceneId}}" baCardClass="table-panel">
+        <form #scfgForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="horizontal-scroll">
+            <table class="table table-hover">
+              <thead>
+              <tr class="black-muted-bg">
+                <th class="browser-icons"></th>
+                <th>Name</th>
+                <th>Function</th>
+                <th>Value</th>
+                <th class="browser-icons"></th> 
+                <th class="browser-icons"></th> 
+              </tr>
+              </thead>
+              <tbody>
+                <ng-template ngFor let-i="index" let-scfg [ngForOf]="sceneConfigData">
+                  <tr class="no-top-border">
+                    <td><img src="{{ ( getImage(scfg.comObj.deviceId) | baAppPicture ) }}" width="30" height="30"></td>
+                    <td ngClass="nowrap">{{scfg.comObj.name}}</td>
+                    <td ngClass="nowrap">{{scfg.comObj.description}}</td>
+                    <td ngClass="nowrap">{{valueString(scfg)}}</td>
+                    <td><a href="javascript:void(0)" (click)="editValue(scfg)"><i class="ion-wrench"></i></a></td>
+                    <td><a href="javascript:void(0)" (click)="removeComObj(i)"><i class="ion-trash-a"></i></a></td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+            <div class="col-sm-4 col-6">
+                <div class="btn-group" ngbDropdown>
+                  <button type="button" class="btn btn-default" ngbDropdownToggle>
+                      Select a Object to add...
+                  </button>
+                  <ul class="dropdown-menu">
+                    <ng-template ngFor let-i="index" let-comObj [ngForOf]="compatibleComObjs">
+                      <li class="dropdown-item" *ngIf="!comObj.sensor">
+                        <a href="javascript:void(0)" (click)="addComObject(i)">{{comObj.name}} - {{comObj.description}}</a>
+                      </li>
+                  </ng-template>
+                  </ul>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <p>&nbsp;</p>
+              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
+            </div>
+            <div class="col-md-6 color-widget">
+              <div class="section-block red-text"><p>{{servererror}}&nbsp;</p></div>
+            </div>
+          </div>
+        </form>
+      </ba-card>
+    </div>
+  </div>
+
+</div>
