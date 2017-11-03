@@ -13,13 +13,11 @@ import { Device } from '../../../types/Device';
 export class GroupConfigComponent implements OnInit {
     private sub:any;
     public groupId:number;
-    private groupConfigData:Array<GroupConfig>;
-    private compatibleComObjs:Array<CommunicationObject>;
+    public groupConfigData:Array<GroupConfig>;
+    public compatibleComObjs:Array<CommunicationObject>;
     private devices : { [key:number]:Device; } = {};
-    private servererror:string;
+    public servererror:string;
     public submitted:boolean = false;
-
-    private selectedAddSensor:number = -1;
 
     advanced: boolean = false;
     

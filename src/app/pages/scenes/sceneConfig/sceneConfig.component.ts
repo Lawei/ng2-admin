@@ -16,10 +16,10 @@ import { EnumSelectModal } from '../../modals/enumSelect-modal/enumSelect-modal.
 export class SceneConfigComponent implements OnInit {
     private sub:any;
     public sceneId:number;
-    private sceneConfigData:Array<SceneConfig>;
-    private compatibleComObjs:Array<CommunicationObject>;
+    public sceneConfigData:Array<SceneConfig>;
+    public compatibleComObjs:Array<CommunicationObject>;
     private devices : { [key:number]:Device; } = {};
-    private servererror:string;
+    public servererror:string;
     public submitted:boolean = false;
   
     constructor(private _dataService: RestDataService, private _route: ActivatedRoute, private _router: Router, private modalService: NgbModal) {}

@@ -14,7 +14,7 @@ export class ShutterConfigComponent implements OnInit, OnDestroy {
 
   public deviceId;
   private sub:any;
-  private servererror:string;
+  public servererror:string;
 
   public submitted:boolean = false;
 
