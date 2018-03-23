@@ -91,6 +91,17 @@
                     <input type="number" min="1" max="60000" step="1" class="form-control" [(ngModel)]="button.sceneid" name="button_sceneid_{{i}}" #buttonsceneid="ngModel">
                   </div>
                 </div>
+                <div class="form-group">
+                  <label>Button LED function</label>
+                  <select class="form-control" [(ngModel)]="button.led" name="button_led_{{i}}">
+                    <option value="NONE">No LED</option>
+                    <option value="OFF">LED always off</option>
+                    <option value="DEFAULT">Default LED useage</option>
+                  </select>
+                </div>
+                <div class="checkbox">
+                  <ba-checkbox [(ngModel)]="button.disabled" [label]="'Disable Button function'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+                </div>
             </div>
           </div>
           <div class="separator"></div>

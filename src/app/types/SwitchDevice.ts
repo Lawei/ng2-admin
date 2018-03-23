@@ -3,6 +3,8 @@ import { Device } from './Device';
 export class SwitchDeviceButton {
 	 public name:string;
 	 public func:string; // Possible Values: SWITCH_FUNCT_SWITCH, SWITCH_FUNCT_DIMM, SWITCH_FUNCT_SHUTTER, SWITCH_FUNCT_VALUE, SWITCH_FUNCT_SCENE
+	 public led:string; // Possible Values: NONE (button has no led), OFF(led shall not be used), DEFAULT(default LED useage)
+	 public disabled:boolean;
 	 
 	 /* Configuration elements for function SWITCH_FUNCT_SWITCH */
 	 public sw_press_en:boolean;
