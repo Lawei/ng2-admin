@@ -1,0 +1,39 @@
+<div class="horizontal-scroll">
+  <form #updateForm="ngForm" (ngSubmit)="onSubmit()">
+    <input type="file" id="updateImage" (change)="fileChange($event)" placeholder="Upload file" accept=".bin" #fileInput>
+    <p>&nbsp;</p>
+    <table class="table table-hover">
+      <thead>
+      <tr class="black-muted-bg">
+        <th class="browser-icons"></th>
+        <th>Name</th>
+        <th>Device #Id</th>
+        <th>Version</th>
+        <th>Selection</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let d of devicesTableData; let i = index" class="no-top-border">
+        <td><img src="{{ ( getImage(d.type) | baAppPicture ) }}" width="30" height="30"></td>
+        <td ngClass="nowrap">{{d.name}}</td>
+        <td>{{d.id}}</td>
+        <td>{{d.version}}</td>
+        <td>
+          <div class="checkbox">
+              <ba-checkbox [(ngModel)]="deviceSelection[i]" [label]="''" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+            </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-primary" [disabled]="updateForm.form.invalid || loading || (devicesTableData.length==0) || (updateImage==null)">Update <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
+      </div>
+  </form>
+  <div class="col-md-6 color-widget">
+    <div class="section-block red-text"><p>{{servererror}}&nbsp;</p></div>
+  </div>
+  <div class="col-md-6 color-widget">
+    <div class="section-block red-text"><p>{{serverresponse}}&nbsp;</p></div>
+  </div>
+</div>

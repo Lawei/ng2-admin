@@ -13,9 +13,6 @@ export class GroupConfig {
     public metaType:string; //!< Type of the communicated values
     public objectType:string; //!< Type of Object that is controled here
 
-    public deviceId:number; //!< Device this configuration resides on
-
-
 
     constructor(comObj:CommunicationObject, groupCfg?:GroupConfig, prio?:string, msgAddr?:number, metaType?:string) {
         this.comObj = comObj;
@@ -28,6 +25,5 @@ export class GroupConfig {
         this.messageAddress = groupCfg && groupCfg.messageAddress || msgAddr;
         this.metaType = groupCfg && groupCfg.metaType || metaType;
         this.objectType = comObj.objectType;
-        this.deviceId = comObj.deviceId;
     }
 }

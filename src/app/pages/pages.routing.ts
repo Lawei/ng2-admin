@@ -18,7 +18,8 @@ export const routes: Routes = [
       { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
       { path: 'devices',  loadChildren: 'app/pages/devices/devices.module#DevicesModule' },
       { path: 'groups',  loadChildren: 'app/pages/groups/groups.module#GroupsModule' },
-      { path: 'scenes',  loadChildren: 'app/pages/scenes/scenes.module#ScenesModule' }
+      { path: 'scenes',  loadChildren: 'app/pages/scenes/scenes.module#ScenesModule' },
+      { path: 'update',  loadChildren: 'app/pages/update/update.module#UpdateModule' },
     ]
   }
 ];

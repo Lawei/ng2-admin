@@ -12,6 +12,7 @@ import { Configuration } from './app.constants';
 import { GroupConfig } from './types/GroupConfig';
 import { SceneConfig } from './types/SceneConfig';
 import { CommunicationObject } from './types/CommunicationObject';
+import { RequestOptions } from '@angular/http';
  
 @Injectable()
 export class RestDataService {
@@ -112,34 +113,21 @@ export class RestDataService {
             .catch(this.handleStrError);
     }
 
- /*
-    public GetSingle = (id: number): Observable<Device> => {
-        return this._http.get(this.actionUrl + id)
-            .map((response: Response) => <Device>response.json())
+    public GetCompatibleDevices = (formData: FormData): Observable<Device[]> => {
+        return this._http.put(this.actionUrl +'compatibleDevices', formData )
+            .map((response: Response) => <Device[]>response.json())
             .catch(this.handleError);
     }
- 
-    public Add = (itemName: string): Observable<Device> => {
-        let toAdd = JSON.stringify({ ItemName: itemName });
- 
-        return this._http.post(this.actionUrl, toAdd, { headers: this.headers })
-            .map((response: Response) => <Device>response.json())
-            .catch(this.handleError);
-    }
- 
 
- 
-    public Delete = (id: number): Observable<Response> => {
-        return this._http.delete(this.actionUrl + id)
-            .catch(this.handleError);
+    public UpdateDevice = (formData: FormData): Observable<Response> => {
+        return this._http.put(this.actionUrl +'update', formData )
+            .catch(error => Observable.throw(error));
     }
-    */
 
     public handleStrError(error: Response) {
         console.error("Status="+error.status+" Msg="+error.text());
         return Observable.throw(error.text() || 'Server error');
     } 
-
 
     private handleError(error: Response) {
         console.error(error);

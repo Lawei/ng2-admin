@@ -42,6 +42,19 @@ export const PAGES_MENU = [
         }
       },
       {
+        path: 'update',  // path for our page
+        data: { // custom menu declaration
+          menu: {
+            title: 'Firmware Update', // menu title
+            icon: 'ion-ios-film-outline', // menu icon
+            pathMatch: 'prefix', // use it if item children not displayed in menu
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
+      },
+      {
         path: 'dashboard',
         data: {
           menu: {
