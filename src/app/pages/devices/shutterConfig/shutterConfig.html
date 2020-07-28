@@ -1,0 +1,64 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card>
+      <nb-card-header>Shutter Configuration for #{{ deviceId }}</nb-card-header>
+      <nb-card-body>
+        <form #shutterConfigForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="form-group" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
+              <label>Device Name</label>
+              <input type="text" class="form-control" [(ngModel)]="deviceConfig.name" #name="ngModel" name="name" required maxlength="32">
+          </div>
+          <div class="form-group" [ngClass]="{'has-error': (!overdrive.valid && overdrive.touched), 'has-success': (overdrive.valid && overdrive.touched)}">
+              <label>Overdrive in 1/255 (Additional movement to savely reach end positions)</label>
+              <input type="number" min="1" max="255" step="1" class="form-control" [(ngModel)]="deviceConfig.overdrive" #overdrive="ngModel" name="overdrive" required>
+          </div>
+          <div class="row">
+            <div class="col-md-3" *ngFor="let channel of deviceConfig.channels; let i = index">
+                <h4 class="grid-h">Channel #{{i+1}} Configuration</h4>
+                <div class="form-group" [ngClass]="{'has-error': (!channelname.valid && channelname.touched), 'has-success': (channelname.valid && channelname.touched)}">
+                    <label>Channel Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="channel.name" name="channel_name_{{i}}" #channelname="ngModel" required maxlength="32">
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': (!movetimeshort.valid && movetimeshort.touched), 'has-success': (movetimeshort.valid && movetimeshort.touched)}">
+                    <label>Move time for Short Movement (ms)</label>
+                    <input type="number" min="1" max="5000" step="1" class="form-control" [(ngModel)]="channel.move_time_short" name="move_time_short_{{i}}" #movetimeshort="ngModel" required>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': (!motorsensecfg.valid && motorsensecfg.touched), 'has-success': (motorsensecfg.valid && motorsensecfg.touched)}">
+                    <label>Movement mode</label>
+                    <select class="form-control" [(ngModel)]="channel.motor_sense_cfg" name="motor_sense_cfg_{{i}}" #motorsensecfg="ngModel">
+                      <option value="MOTOR_SENSE_OFF">manual (Movement time must be set by hand)</option>
+                      <option value="MOTOR_SENSE_CALIBRATE">init-auto (Re-Initiate automatic movetime measurement)</option>
+                      <option value="MOTOR_SENSE_ON" disabled>auto (Movement Time was measured automatically)</option>
+                    </select>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': (!movetimeup.valid && movetimeup.touched), 'has-success': (movetimeup.valid && movetimeup.touched)}">
+                    <label>Move time close to open (ms)</label>
+                    <input type="number" [readonly]="(channel.motor_sense_cfg != 'MOTOR_SENSE_OFF' )" min="1" max="60000" step="1" class="form-control" [(ngModel)]="channel.move_time_up" name="move_time_up_{{i}}" #movetimeup="ngModel">
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': (!movetimedown.valid && movetimedown.touched), 'has-success': (movetimedown.valid && movetimedown.touched)}">
+                    <label>Move time open to close (ms)</label>
+                    <input type="number" [readonly]="(channel.motor_sense_cfg != 'MOTOR_SENSE_OFF' )" min="1" max="60000" step="1" class="form-control" [(ngModel)]="channel.move_time_down" name="move_time_down_{{i}}" #movetimedown="ngModel">
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" [disabled]="!shutterConfigForm.form.valid">Save</button>
+              <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
+            </div>
+            <div class="col-md-6 color-widget">
+              <div class="section-block red-text"><p>{{servererror}}&nbsp;</p></div>
+            </div>
+          </div>
+      </form>
+    </nb-card-body>
+    </nb-card>
+    </div>
+  </div>
+</div>
+
+
+
+
+
