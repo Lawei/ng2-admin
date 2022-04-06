@@ -1,0 +1,8 @@
+Install:
+npm -i
+
+Run local copy:
+npm start
+
+Production Bundle:
+npm run build:prod
